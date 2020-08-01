@@ -1,0 +1,18 @@
+# READ THE MPG & SUSPENSION COIL DATA IN DATASETS:
+MechaCar_mpg <- read.csv('MechaCar_mpg.csv',stringsAsFactors = F)
+Suspension_Coil <- read.csv('Suspension_Coil.csv',stringsAsFactors = F)
+
+# GENERATE A MULTIPLE LINEAR REGRESSION MODEL FOR THE MPG DATA:
+lm(mpg ~ vehicle.length + vehicle.weight + spoiler.angle + ground.clearance + AWD,data=MechaCar_mpg)
+
+# GENERATE SUMMARY STATISTICS:
+summary(lm(mpg ~ vehicle.length + vehicle.weight + spoiler.angle + ground.clearance + AWD,data=MechaCar_mpg))
+
+# CREATE SUMMARY TABLE FOR SUSPENSION COIL DATA METRICS / ALL DATA:
+summarize_coils <- Suspension_Coil %>% summarize("Mean PSI"=mean(PSI),"Meadian PSI"=median(PSI),Variance=var(PSI),"Standard Deviation"=sd(PSI))
+
+# CREATE SUMMARY TABLE FOR SUSPENSION COIL DATA METRICS / GROUP BY LOT NUMBER:
+summarize_coils <- Suspension_Coil %>% group_by(Manufacturing_Lot) %>% summarize("Mean PSI"=mean(PSI),"Median PSI"=median(PSI),Variance=var(PSI),"Standard Deviation"=sd(PSI))
+
+# COMPARE SAMPLE VERSUS SUSPENSION COIL POPULATION MEAN:
+t.test(log10(Suspension_Coil$PSI),mu=mean(log10(Suspension_Coil$PSI)))
